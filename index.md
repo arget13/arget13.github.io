@@ -32,11 +32,14 @@ footer
 {
     background-color: #181a1b;
 }
-    
 table td
 {
     padding: 0.5rem 1rem;
     border: 1px solid #1d1f20;
+}
+.highlight .o, .highlight .k, .highlight .kv
+{
+    color: rgb(232, 230, 227);
 }
 </style>
 
