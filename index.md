@@ -20,7 +20,8 @@ footer
 {
     color: rgb(232, 230, 227);
     background-color: rgb(17, 122, 70);
-    background-image: linear-gradient(120deg, rgb(17, 70, 122), rgb(17, 122, 70));
+    /* background-image: linear-gradient(120deg, rgb(17, 70, 122), rgb(17, 122, 70));*/
+    background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(45, 18, 67));
 }
 .main-content pre
 {
