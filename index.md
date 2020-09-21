@@ -48,7 +48,7 @@ table td
 Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
 {% highlight C linenos=table %}
 #include <stdio.h>
-
+// Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
 typedef struct
 {
     int x;
@@ -71,7 +71,7 @@ Un poco de python por aquí
 {% highlight python %}
 from pwn import *
 import ctypes
-
+# Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
 s = ssh(host='pwn.w3challs.com',
         user='canary',
         password='canary',
