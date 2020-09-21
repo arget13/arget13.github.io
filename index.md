@@ -1,8 +1,8 @@
----
-layout: default
----
-
 <style>
+*
+{
+    scrollbar-color: #202324 #454a4d;
+}
 body
 {
     color: rgb(206, 202, 195);
@@ -17,6 +17,12 @@ footer
     color: rgb(232, 230, 227);
     background-color: rgb(17, 122, 70);
     background-image: linear-gradient(120deg, rgb(17, 70, 122), rgb(17, 122, 70));
+}
+pre
+{
+    color: rgb(164, 156, 144);
+    background-color: rgb(29, 31, 32);
+    border-color: rgb(35, 59, 82);
 }
 </style>
 
