@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 {% endhighlight %}
 
 Un poco de python por aquí
-{% highlight python linenos=table %}
+{% highlight python %}
 from pwn import *
 import ctypes
 
