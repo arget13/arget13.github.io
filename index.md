@@ -18,7 +18,7 @@ footer
     background-color: rgb(17, 122, 70);
     background-image: linear-gradient(120deg, rgb(17, 70, 122), rgb(17, 122, 70));
 }
-pre
+.main-content pre
 {
     color: rgb(164, 156, 144);
     background-color: rgb(29, 31, 32);
