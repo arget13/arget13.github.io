@@ -24,7 +24,7 @@ footer
 }
 .main-content pre
 {
-    color: rgb(164, 156, 144);
+    color: #79a2b5;
     background-color: rgb(29, 31, 32);
     border-color: rgb(35, 59, 82);
 }
@@ -39,7 +39,7 @@ table td
 }
 .highlight .o, .highlight .k, .highlight .kv
 {
-    color: rgb(232, 230, 227);
+    color: rgb(142, 142, 142);
 }
 </style>
 
