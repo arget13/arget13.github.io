@@ -26,7 +26,8 @@ footer
 {
     color: #729bae;
     background-color: rgb(29, 31, 32);
-    border-color: rgb(35, 59, 82);
+    border-color: rgb(29, 31, 32);
+    padding: 0.3rem !important;
 }
 .highlight
 {
@@ -34,7 +35,7 @@ footer
 }
 table td
 {
-    padding: 0.5rem 1rem;
+    padding: 0 !important;
     border: 1px solid #1d1f20 !important;
 }
 .highlight .o, .highlight .k, .highlight .kv, .highlight .kn
