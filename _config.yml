@@ -1,2 +1,4 @@
 title: Securitatem
 theme: jekyll-theme-cayman
+syntax-highlighting:
+    enabled : true
