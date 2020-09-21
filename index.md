@@ -37,7 +37,16 @@ footer
 # Lorem
 ### Ipsum
 Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
-{% highlight C %}
+{% highlight C linenos=table %}
 #include <stdio.h>
-int main(int argc, char** argv);
+typedef struct
+{
+    int x;
+    int y;
+};
+int main(int argc, char** argv)
+{
+    char asd[][5] = { "Hola" };
+    printf("%s %s\n", 0[asd], "mundo");
+}
 {% endhighlight %}
