@@ -28,6 +28,10 @@ footer
     background-color: rgb(29, 31, 32);
     border-color: rgb(35, 59, 82);
 }
+.highlight
+{
+    background-color: #181a1b;
+}
 </style>
 
 # Lorem
