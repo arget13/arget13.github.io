@@ -35,7 +35,7 @@ footer
 table td
 {
     padding: 0.5rem 1rem;
-    border: 1px solid #1d1f20;
+    border: 1px solid #1d1f20 !important;
 }
 .highlight .o, .highlight .k, .highlight .kv
 {
