@@ -24,7 +24,7 @@ footer
 }
 .main-content pre
 {
-    color: #7ea7bb;
+    color: #729bae;
     background-color: rgb(29, 31, 32);
     border-color: rgb(35, 59, 82);
 }
