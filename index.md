@@ -43,6 +43,18 @@ table td
 {
     color: rgb(142, 142, 142);
 }
+.highlight .nl
+{
+    color: #cc3b7e;
+}
+.highlight .nf
+{
+    color: #882653;
+}
+::selection
+{
+    background: #1b1b8e78;
+}
 </style>
 
 # Lorem
