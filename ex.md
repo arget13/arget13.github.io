@@ -1,6 +1,5 @@
 ---
 layout: default
-permalink: /index.html
 ---
 <link rel="stylesheet" href="style.css">
 
