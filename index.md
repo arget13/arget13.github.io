@@ -138,7 +138,7 @@ Ensamblador
 __libc_csu_init:
     endbr64 
     push   r15
-    lea    r15,[rip+0x2bfb]        # 3de8 <__frame_dummy_init_array_entry>
+    lea    r15,[rip+0x2bfb]        ; 3de8 <__frame_dummy_init_array_entry>
     push   r14
     mov    r14,rdx
     push   r13
@@ -146,7 +146,7 @@ __libc_csu_init:
     push   r12
     mov    r12d,edi
     push   rbp
-    lea    rbp,[rip+0x2bec]        # 3df0 <__do_global_dtors_aux_fini_array_entry>
+    lea    rbp,[rip+0x2bec]        ; 3df0 <__do_global_dtors_aux_fini_array_entry>
     push   rbx
     sub    rbp,r15
     sub    rsp,0x8
