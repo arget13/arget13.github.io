@@ -7,6 +7,10 @@ permalink: /index.html
 {
     scrollbar-color: #202324 #454a4d;
 }
+.project-name
+{
+    font-size: 4.25rem;
+}
 body
 {
     color: rgb(206, 202, 195);
