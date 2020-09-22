@@ -48,7 +48,7 @@ table td
 # Lorem
 ### Ipsum
 Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
-{% highlight C linenos=table %}
+```C
 #include <stdio.h>
 // Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
 typedef struct
@@ -67,10 +67,10 @@ int main(int argc, char** argv)
     fgh->y = 4321;
     printf("%i %i\n", zxc.x, zxc.y);
 }
-{% endhighlight %}
+```
 
 Un poco de python por aquí
-{% highlight python %}
+```python
 from pwn import *
 import ctypes
 # Inventore doloremque eaque iusto et reiciendis vel provident rem. Eligendi qui iure assumenda et iusto placeat mollitia laudantium. Molestias cum dolores ut. Reiciendis ex quis sed provident velit labore magnam
@@ -132,4 +132,4 @@ payload2 += asm(shellcraft.i386.linux.setreuid32(1026, 1026) + \
 p.writeline(payload + payload2)
 
 p.interactive()
-{% endhighlight %}
+```
