@@ -2,7 +2,7 @@
 title: Home
 permalink: /
 ---
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 
 ## Posts
 
