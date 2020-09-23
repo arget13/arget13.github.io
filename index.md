@@ -7,7 +7,7 @@ permalink: /
 
 * * *
 
-<ul style="list-style-type: none;">
+<ul style="list-style-type: none; padding: 0;">
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url | remove: '.html' }}">
