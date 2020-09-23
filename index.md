@@ -3,7 +3,7 @@ permalink: /
 ---
 <link rel="stylesheet" href="/style.css">
 
-## Posts
+# Posts
 
 * * *
 
