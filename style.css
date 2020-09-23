@@ -75,9 +75,9 @@ a:visited, a:active, a:focus, a:link
 {
     text-decoration: none;
 }
-div.entry:hover > p
+div:hover > p
 {
-    outline-color: solid;
+    outline: solid;
 }
 a .entry p
 {
