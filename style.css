@@ -54,3 +54,18 @@ table td
 {
     background: #1b1b8e78;
 }
+a .entry
+{
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 20vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+a .entry p
+{
+    color: #fff;
+    font-size: 4rem;
+    margin: 0;
+}
