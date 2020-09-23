@@ -2,7 +2,7 @@
 {
     scrollbar-color: #202324 #454a4d;
 }
-media screen and (max-width: 42em)
+@media screen and (max-width: 42em)
 {
     .project-name
     {
