@@ -1,5 +1,7 @@
 ---
 title: "Example-zxc 2"
+tags: fgh rty
+item_image: https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80
 ---
 <link rel="stylesheet" href="/style.css">
 
