@@ -64,10 +64,18 @@ a .entry
     display: flex;
     margin-top: 5vh !important;
 }
+a
+{
+    text-decoration-line: none;
+}
+a > div:hover
+{
+    text-decoration: line-through white;
+}
 a .entry p
 {
     color: #fff;
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 0;
 }
 #posts
