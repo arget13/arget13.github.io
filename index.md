@@ -7,12 +7,14 @@ permalink: /
 
 * * *
 
-<ul>
+<ul style="list-style-type: none;">
   {% for post in site.posts %}
     <li>
-      <h3><a href="{{ post.url | remove: '.html' }}">{{ post.title }}</a></h3>
-      <img src="{{ post.item_image }}" width="512" height="256">
-      <p></p>
+      <a href="{{ post.url | remove: '.html' }}">
+          <div style="background-image: url('{{ post.item_image }}');" class="entry">
+              <p>{{ post.title }}</p>
+          </div>
+      </a>
     </li>
   {% endfor %}
 </ul>
