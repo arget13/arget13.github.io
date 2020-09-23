@@ -2,6 +2,13 @@
 {
     scrollbar-color: #202324 #454a4d;
 }
+media screen and (max-width: 42em)
+{
+    .project-name
+    {
+        font-size:2.75rem
+    }
+}
 .project-name
 {
     font-size: 4.25vw;
