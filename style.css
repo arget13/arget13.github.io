@@ -62,6 +62,7 @@ a .entry
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-top: 5vh !important;
 }
 a .entry p
 {
