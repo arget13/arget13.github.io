@@ -70,3 +70,8 @@ a .entry p
     font-size: 4rem;
     margin: 0;
 }
+#posts
+{
+    margin-top: 0;
+    font-size: 2.5rem;
+}
