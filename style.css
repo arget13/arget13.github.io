@@ -97,7 +97,7 @@ div.entry
     background-size: cover;
     height: 40vh;
     /*justify-content: center;
-    /*align-items: center;
+    align-items: center;
     display: flex;*/
     margin-top: 5vh !important;
     position: relative;
@@ -131,7 +131,7 @@ svg
     stroke-dashoffset: -474;
     stroke-width: 8px;
     fill: transparent;
-    stroke: #19f6e8;
+    stroke: #fff;
     transition: stroke-width 1s, stroke-dashoffset 1s, stroke-dasharray 1s;
 }
 
