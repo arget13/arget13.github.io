@@ -12,7 +12,10 @@ permalink: /
     <li>
       <a href="{{ post.url | remove: '.html' }}">
           <div style="background-image: url('{{ post.item_image }}');" class="entry">
-              <p>{{ post.title }}</p>
+              <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+                  <rect class="shape" height="60" width="320" />
+                  <p class="title">{{ post.title }}</p>
+              </svg>
           </div>
       </a>
     </li>
