@@ -36,6 +36,11 @@ footer
     background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(45, 18, 67));
 }
 
+.main-content
+{
+    font-size: 1.3rem;
+}
+
 .main-content pre
 {
     color: #729bae;
@@ -48,7 +53,7 @@ footer
 {
     padding: 2px 4px;
     font-family: monospace;
-    font-size: 1rem;
+    font-size: 1rem !important;
     color: #567482;
     background-color: #f3f6fa;
     border-radius: 0.3rem;
