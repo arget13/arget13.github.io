@@ -12,8 +12,8 @@ permalink: /
         <li>
             <a href="{{ post.url | remove: '.html' }}" draggable="false">
                 <div style="background-image: url('{{ post.item_image }}');" class="entry">
-                    <svg height="60" width="320">
-                        <rect class="shape" height="60" width="320" />
+                    <svg height="4rem" width="26rem">
+                        <rect class="shape" height="4rem" width="26rem" />
                     </svg>
                     <p class="title">{{ post.title }}</p>
                 </div>

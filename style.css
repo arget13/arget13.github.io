@@ -152,9 +152,9 @@ svg
 
 .shape
 {
-    stroke-dasharray: 140 540;
-    stroke-dashoffset: -474;
-    stroke-width: 8px;
+    stroke-dasharray: 9rem 51rem;
+    stroke-dashoffset: -38.75rem;
+    stroke-width: .5rem;
     fill: transparent;
     stroke: #fff;
     transition: stroke-width 1s, stroke-dashoffset 1s, stroke-dasharray 1s;
@@ -164,7 +164,7 @@ div.entry:hover .shape
 {
     stroke-width: 2px;
     stroke-dashoffset: 0;
-    stroke-dasharray: 760;
+    stroke-dasharray: 60rem 0;
 }
 
 #posts
