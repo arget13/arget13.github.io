@@ -36,6 +36,11 @@ footer
     background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(45, 18, 67));
 }
 
+.main-content p
+{
+    text-align: justify;
+}
+
 .main-content
 {
     font-size: 1.3rem;
@@ -169,5 +174,5 @@ div.entry:hover .shape
 ul
 {
     list-style-type: circle;
-    padding: 0;
+    padding: 0 2rem;
 }
