@@ -18,9 +18,6 @@ permalink: /
                     <p class="title">{{ post.title }}</p>
                 </div>
             </a>
-            <aside>
-                <p>tag1 tag2 tag3</p>
-            </aside>
         </li>
     {% endfor %}
 </ul>
