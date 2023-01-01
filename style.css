@@ -36,7 +36,7 @@ footer
     background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(45, 18, 67));
 }
 
-.main-content p li
+.main-content p, li
 {
     text-align: justify;
 }
@@ -128,10 +128,12 @@ div.entry
 
 p.title
 {
+
     font-family: 'Roboto Condensed';
-    font-size: 22px;
-    line-height: 32px;
-    letter-spacing: 8px;
+    text-align: center;
+    font-size: 1.39rem;
+    line-height: 1.5rem;
+    letter-spacing: .3rem;
     color: #fff;
     margin: 0;
     position: absolute;
