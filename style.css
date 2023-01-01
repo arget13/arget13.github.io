@@ -168,6 +168,6 @@ div.entry:hover .shape
 
 ul
 {
-    list-style-type: none;
+    list-style-type: circle;
     padding: 0;
 }
