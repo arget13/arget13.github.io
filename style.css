@@ -176,3 +176,9 @@ ul
     list-style-type: circle;
     padding: 0 2rem;
 }
+
+#entries
+{
+    list-style-type: none;
+    padding: 0;
+}

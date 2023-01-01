@@ -7,7 +7,7 @@ permalink: /
 
 * * *
 
-<ul>
+<ul class="entries">
     {% for post in site.posts %}
         <li>
             <a href="{{ post.url | remove: '.html' }}" draggable="false">
