@@ -177,7 +177,7 @@ ul
     padding: 0 2rem;
 }
 
-#entries
+ul.entries
 {
     list-style-type: none;
     padding: 0;
