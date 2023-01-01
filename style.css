@@ -36,7 +36,7 @@ footer
     background-image: linear-gradient(120deg, rgb(0, 0, 0), rgb(45, 18, 67));
 }
 
-.main-content p
+.main-content p li
 {
     text-align: justify;
 }
