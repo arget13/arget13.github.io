@@ -8,6 +8,7 @@ item_image: https://github.com/arget13/arget13.github.io/raw/master/images/wrenc
 {
     background-image: url('https://github.com/arget13/arget13.github.io/raw/master/images/wrench.jpg');
     background-position: center;
+    background-size: cover;
 }
 </style>
 
