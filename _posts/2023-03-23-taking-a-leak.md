@@ -13,7 +13,7 @@ item_image: https://github.com/arget13/arget13.github.io/raw/master/images/wrenc
 
 No greeting, no nothing, quick, follow me to IDA where you will find one of the smallest heap challenges you will ever find, found in the **Cyberapocalypse 2023** CTF's challenge [**Math Door**](https://github.com/arget13/arget13.github.io/raw/master/files/math_door.tar.xz).
 
-```C
+```c
 int main()
 {
     setup(); // setvbuf() for stdin, out and err
@@ -90,7 +90,7 @@ We may also contemplate the utter **lack of ways to leak** any address of anythi
 
 # Freeing then using (as rude as it sounds)
 Easy, they all are of size 0x20 so when `free()`d they'll go to the tcache's first bin. We are facing glibc 2.31, let's see how tcache chunks look like.
-```C
+```c
 typedef struct tcache_entry
 {
   struct tcache_entry *next;
@@ -128,7 +128,7 @@ Now let's study what size we want that chunk to be. It is undeniable that we wan
 
 # Grab my hand, son, I'm taking you to a better place, the unsorted bin
 Well, that's easy, we could use a size larger than the maximum for tcache, `0x410`, which is also larger than fastbin's, and prevent our chunk from going to either. But there's a slight problem, when we `free()` this chunk it will be checked if it's actually in use, and the way it knows it is by going to the next chunk in memory and seeing its PREV_INUSE bit. Now, our chunk plus a size of `0x410 - 0x8` will fall somewhere in the top chunk, where there will surely be a NULL pointer.
-```C
+```c
     nextchunk = chunk_at_offset(p, size);
     // ...
     if (__glibc_unlikely (!prev_inuse(nextchunk)))
@@ -139,7 +139,7 @@ We can solve this creating several chunks until one is placed there but, given t
 So what I'm going to do is use a size of `0xa0`, larger than maxfast, and to keep it from going to the tcache I'm going to fill the tcache. With a size of `0xa0` we only need four allocations, and one extra to separate our chunk from the top chunk (otherwise they would just be merged instead of having our chunk placed in the unsorted bin).
 
 One last thing, when a chunk is taken from the tcache its `key` field is set to NULL -which makes sense since that field is a measure to detect if a chunk is already free, duh.
-```C
+```c
 tcache_get (size_t tc_idx)
 {
   tcache_entry *e = tcache->entries[tc_idx];
@@ -180,7 +180,7 @@ gef➤  p (void*)&__free_hook - 0x00007f530e48fbe0
 $2 = (void *) 0x2268
 ```
 If we added to that pointer `0x2268` we would make our chunk point to `_free_hook`. But there's first another problem, when we allocate this chunk from the unsorted bin a couple of checks are going to catch us.
-```C
+```c
           mchunkptr next = chunk_at_offset (victim, size);
           if (__glibc_unlikely (chunksize_nomask (next) < 2 * SIZE_SZ)
               || __glibc_unlikely (chunksize_nomask (next) > av->system_mem))
@@ -297,7 +297,7 @@ While growing up one would always hear stories, legends, myths. As a wide-eyed k
 
 ## Glibc streams internals
 So when growing up in the pwn world I heard people talking about abusing `FILE` structures, but never had the need to use them until now, so I decided to go and see the Glibc code for all this stuff, streams and all. The following is the (main part of the) definition for the `struct FILE`.
-```C
+```c
 /* The tag name of this struct is _IO_FILE to preserve historic
    C++ mangled names for functions taking FILE* arguments.
    That name should not be used in new code.  */
@@ -326,7 +326,7 @@ From here I want you to keep a couple of ideas.
     - The `*_ptr` pointers point to the place where new data can be added to or drawn from.
 
 Right after we edit the structure the program will execute the call to `puts("1. Create...")` -keep in mind that the string cointains newlines. `puts()` (`_IO_puts()` for close friends) has the following code,
-```C
+```c
 int
 _IO_puts (const char *str)
 {
@@ -347,7 +347,7 @@ _IO_puts (const char *str)
 which I know doesn't answer many questions (or any at all), but hey, this is glibc, this isn't supposed to be easy. What we care the most about are the calls to `_IO_sputn()` used to add the string to the buffer, and `_IO_putc_unlocked()`, which adds a newline.
 
 `_IO_sputn()` is, in the end (and I had to track through a lot of macros and shit), a call to `_IO_default_xsputn()`:
-```C
+```c
 size_t
 _IO_new_file_xsputn (FILE *f, const void *data, size_t n)
 {
@@ -403,7 +403,7 @@ _IO_new_file_xsputn (FILE *f, const void *data, size_t n)
 In the case there was a newline, the string is copied to the buffer till that newline and then flushes the buffer through `_IO_OVERFLOW()`.
 
 That `_IO_OVERFLOW()` takes us somewhere.
-```C
+```c
 int
 _IO_new_file_overflow (FILE *f, int ch)
 {
@@ -415,7 +415,7 @@ _IO_new_file_overflow (FILE *f, int ch)
 }
 ```
 which gets to (this is so **fun**!)
-```C
+```c
 int
 _IO_new_do_write (FILE *fp, const char *data, size_t to_do)
 {
@@ -448,7 +448,7 @@ new_do_write (FILE *fp, const char *data, size_t to_do)
 Huh, we want to avoid entering that `if` since `seek()`ing through `stdout` would return an error and `new_pos == _IO_pos_BAD` would be true (and this function would return without calling to `write()`). It's also nice to notice that this function resets `_IO_write_base` and `_IO_read_end` (through `_IO_setg()`). Anyway, we can almost see our target (`_IO_SYSWRITE()`).
 
 And finally we have `_IO_SYSWRITE()`, which in essence is just a call to `write()`.
-```C
+```c
 ssize_t
 _IO_new_file_write (FILE *f, const void *data, ssize_t n)
 {
