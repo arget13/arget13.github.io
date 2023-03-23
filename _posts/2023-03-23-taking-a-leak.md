@@ -81,14 +81,14 @@ void math()
 
 ```
 
-# sƃnq
+## sƃnq
 We can see that the program is very simple, as is the main bug: a UAF in `delete()`. After `free()`ing a chunk there's no information stored about the new status of that chunk (*e. g.* setting it to NULL). We could consider another bug of uninitialized memory in `create()`, the chunks should be `memset()` before using them.
 
 The function `math()` is peculiar because it doesn't let us store information in a chunk as such, it rather allows us to increment independently the three integers that each chunk holds.
 
 We may also contemplate the utter **lack of ways to leak** any address of anything *at all*.
 
-# Freeing then using (as rude as it sounds)
+## Freeing then using (as rude as it sounds)
 Easy, they all are of size 0x20 so when `free()`d they'll go to the tcache's first bin. We are facing glibc 2.31, let's see how tcache chunks look like.
 ```c
 typedef struct tcache_entry
@@ -126,7 +126,7 @@ create() # idx = 4, malloc() returns a pointer to chunk #2's header
 ```
 Now let's study what size we want that chunk to be. It is undeniable that we want a pointer to the libc, maybe we can't leak it but we'll see how to use it when we get it, ok? If we want a chunk with its `fwd` field pointing to the libc we need a chunk in a bin with circular linking, *i. e.* unsorted bin.
 
-# Grab my hand, son, I'm taking you to a better place, the unsorted bin
+## Grab my hand, son, I'm taking you to a better place, the unsorted bin
 Well, that's easy, we could use a size larger than the maximum for tcache, `0x410`, which is also larger than fastbin's, and prevent our chunk from going to either. But there's a slight problem, when we `free()` this chunk it will be checked if it's actually in use, and the way it knows it is by going to the next chunk in memory and seeing its PREV_INUSE bit. Now, our chunk plus a size of `0x410 - 0x8` will fall somewhere in the top chunk, where there will surely be a NULL pointer.
 ```c
     nextchunk = chunk_at_offset(p, size);
@@ -195,7 +195,7 @@ If we added to that pointer `0x2268` we would make our chunk point to `_free_hoo
 ```
 So, for starters, we'd need `__free_hook - 8` pointing to a valid chunk size, which isn't, we have a NULL pointer there. And there's nothing we can do about, so that alone makes impossible for us to get that sweet `__free_hook` through unsorted bin.
 
-# Mom, where do chunks come from?
+## Mom, where do chunks come from?
 Ok, we can put a chunk in the unsorted bin, make it point to wherever we want in the libc, and then pick it up from the tcache, which won't trigger this checks. And this only requires us to place the chunk in the tcache before changing its size to 0xa0.
 ```python
 create()
@@ -290,12 +290,12 @@ $rax   : 0x3f616973696c6f70 ("polisia?"?)
 ```
 We control the program counter, yay! But this is nothing, we still have a handful of nothing if we don't get a leak. So let me please stand up, stretch my legs a little and go take a leak.
 
-# Taking a leak
+## Taking a leak
 With the possibility of leaking an address thrown out of the window we may as well throw the challenge after it (or preferably ourselves). But I don't know, maybe I am too manly (heh no, I'm not), but I say that if we can't find a leak \*grabs a wrench\*, let's make one ourselves.
 
 While growing up one would always hear stories, legends, myths. As a wide-eyed kid listened, not knowing whether to believe or not, details were attentively collected, hidden pieces of information. Weird houses, SROP, ret2dlresolve, JOP, far returns... and the one I'm going to talk about today, `FILE` structures overwriting.
 
-## Glibc streams internals
+### Glibc streams internals
 So when growing up in the pwn world I heard people talking about abusing `FILE` structures, but never had the need to use them until now, so I decided to go and see the Glibc code for all this stuff, streams and all. The following is the (main part of the) definition for the `struct FILE`.
 ```c
 /* The tag name of this struct is _IO_FILE to preserve historic
@@ -475,7 +475,7 @@ _IO_new_file_write (FILE *f, const void *data, ssize_t n)
 ```
 So if we are able to change where `_IO_write_base` points to in `stdout`'s structure we would be able leak the contents of wherever place we want (as long as it is at an address lower than `_IO_write_ptr` or we would try to `write()` a negative number of bytes, *i. e.* a large amount). We need to remember that `_IO_read_end` must point to the same place as `_IO_write_base`. And we also know that we don't need to worry about breaking anything because of leaving these pointing to somewhere strange since they will be reset by `new_do_write()`.
 
-## Growing up
+### Growing up
 So instead of getting a pointer to `__free_hook` we'll get a pointer to `stdout`'s `_IO_read_end` field, and overwrite it and `_IO_write_base` as well. In the process of taking that pointer from the tcache we will unavoidably make NULL the `_IO_read_base` field, but it is never going to be used for `stdout`, so forget about it.
 ```
 gef➤  x/gx &stdout
@@ -548,7 +548,7 @@ And now we get our sweet sweet address!
 Libc: 0x7fafe98e8000
 ```
 
-# How not to crash a program
+## How not to crash a program
 See, manipulating the heap in its current "suboptimal" state is at least tricky, but hold on, there is an interesting thing going on here
 ```
 gef➤  heap bins tcache
