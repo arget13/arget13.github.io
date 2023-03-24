@@ -82,7 +82,7 @@ void math()
 ```
 
 ## sƃnq (and a broad analysis)
-We can see that the program is very simple, as is the main bug: a UAF in `delete()`. After `free()`ing a chunk there's no information stored about the new status of that chunk (*e. g.* setting it to NULL). We'd consider another bug of uninitialized memory in `create()` since the chunks aren't `memset()` before they are used.
+We can see that the program is pretty simple, as is the main bug: a UAF in `delete()`. After `free()`ing a chunk there's no information stored about the new status of that chunk (*e. g.* setting it to NULL). We'd consider another bug of uninitialized memory in `create()` since the chunks aren't `memset()` before they are used.
 
 The function `math()` is peculiar because it doesn't let us store information as it is in a chunk, it rather allows us to increment independently the three integers that each chunk hold.
 
@@ -150,7 +150,7 @@ tcache_get (size_t tc_idx)
   return (void *) e;
 }
 ```
-Right, the size of our chunk #2 will be chunk #4's `key` field, so after the fourth allocation we'll have a chunk #2 of size `0` xD, therefore we need to add `0xa1` to the size (notice the PREV_INUSE bit set because we don't want our chunk consolidating backwards), instead of only `0x80`, which is what we'd add if the chunk still had `0x21` as size.
+Right, the size of our chunk #2 will be chunk #4's `key` field, so after the fourth allocation we'll have a chunk #2 of size `0` xD, therefore we need to add `0xa1` to the size (notice the `PREV_INUSE` bit set because we don't want our chunk consolidating backwards), instead of only `0x80`, which is what we'd add if the chunk still had `0x21` as size.
 ```python
 # Create a chunk with PREV_INUSE set for our chunk that we'll make of size 0xa0
 # Add one chunk extra to prevent it from coalescing with the top chunk
@@ -180,7 +180,7 @@ gef➤  x/2gx 0x55f089d012e0
 gef➤  p (void*)&__free_hook - 0x00007f530e48fbe0
 $2 = (void *) 0x2268
 ```
-If we added to that pointer `0x2268` we would make our chunk point to `_free_hook`. But there's first another problem, when we allocate this chunk from the unsorted bin a couple of checks are going to catch us.
+If we added `0x2268` to that pointer we'd make our chunk point to `_free_hook`. But there's first another problem, when we allocate this chunk from the unsorted bin a couple of checks are going to catch us.
 ```c
           mchunkptr next = chunk_at_offset (victim, size);
           if (__glibc_unlikely (chunksize_nomask (next) < 2 * SIZE_SZ)
@@ -400,9 +400,7 @@ _IO_new_file_xsputn (FILE *f, const void *data, size_t n)
   // [...]
 }
 ```
-In case there was a newline, the string is copied to the buffer till its last newline and then, if the string cointained at least one newline, the buffer is flushed through `_IO_OVERFLOW()`.
-
-`_IO_OVERFLOW()` takes us here.
+The string is copied to the buffer till its last newline and then, if the string cointained at least one newline, the buffer is flushed through `_IO_OVERFLOW()`, which takes us to
 ```c
 int
 _IO_new_file_overflow (FILE *f, int ch)
@@ -447,7 +445,7 @@ new_do_write (FILE *fp, const char *data, size_t to_do)
 ```
 Huh, we want to avoid entering that `if` since `seek()`ing through `stdout` would return an error and `new_pos == _IO_pos_BAD` would be true (and this function would return without calling to `write()`). It's also nice to notice that this function resets `_IO_write_base` and `_IO_read_end` (through `_IO_setg()`).
 
-And finally we have `_IO_SYSWRITE()`, which in essence is just a call to `write()`.
+And finally we have `_IO_SYSWRITE()`, which in essence is just a big chungus call to `write()`.
 ```c
 ssize_t
 _IO_new_file_write (FILE *f, const void *data, ssize_t n)
@@ -478,7 +476,7 @@ Boy, reading the glibc is exhausting. I need to read something that negates all 
 So if we are able to change where `_IO_write_base` points to in `stdout`'s structure we would be able to leak the contents of wherever place we want.<span id="2_"><a href="#2"><sup>2</sup></a> We need to remember that `_IO_read_end` must point to the same place as `_IO_write_base`. And we also know that we don't need to worry about breaking anything due to leaving them pointing to some weird place since they will be reset by `new_do_write()`.
 
 ### Growing up
-So instead of getting a pointer to `__free_hook` we'll get a pointer to `stdout`'s `_IO_read_end` field, and overwrite it and `_IO_write_base` as well. In the process of taking that pointer from the tcache we will unavoidably make NULL the `_IO_read_base` field, but it is never going to be used for `stdout`, so don't think about it.
+So instead of getting a pointer to `__free_hook` we'll get a pointer to `stdout`'s `_IO_read_end` field, and overwrite it along with `_IO_write_base`. In the process of taking that pointer from the tcache we will unavoidably make NULL the `_IO_read_base` field, but it is never going to be used for `stdout`, so don't think about it.
 ```
 gef➤  x/gx &stdout
 0x555555558020 <stdout@@GLIBC_2.2.5>:   0x00007ffff7fc26a0
@@ -487,7 +485,7 @@ gef➤  x/gx 0x00007ffff7fc26a0
 gef➤  
 0x7ffff7fc26a8 <_IO_2_1_stdout_+8>:     0x00007ffff7fc2723
 gef➤  
-0x7ffff7fc26b0 <_IO_2_1_stdout_+16>:    0x00007ffff7fc2723 // We want edit this
+0x7ffff7fc26b0 <_IO_2_1_stdout_+16>:    0x00007ffff7fc2723 // We want to edit this
 gef➤  p (void*)&__free_hook - 0x7ffff7fc26b0
 $1 = (void *) 0x1798
 gef➤  p 0x2268-0x1798
@@ -649,11 +647,11 @@ Libc: 0x7f87008fd000
 $ whoami
 arget
 ```
-Now, I have been sitting for too long, I *really* need to take a leak.
+Now, I have been sitting for too long, and I *really* need to take a leak.
 
 Y.
 
-> Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bells tolls; it tolls for thee.  
+> Any man's death diminishes me, because I am involved in mankind, and therefore never send to know for whom the bell tolls; it tolls for thee.  
 
 <figcaption>— John Donne, <cite>Meditation XVII</cite>.</figcaption>
 
