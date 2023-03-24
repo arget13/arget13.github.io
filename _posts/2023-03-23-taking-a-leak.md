@@ -82,7 +82,7 @@ void math()
 ```
 
 ## sƃnq (and a broad analysis)
-We can see that the program is very simple, as is the main bug: a UAF in `delete()`. After `free()`ing a chunk there's no information stored about the new status of that chunk (*e. g.* setting it to NULL). We could consider another bug of uninitialized memory in `create()`, the chunks aren't `memset()`ed before using them.
+We can see that the program is very simple, as is the main bug: a UAF in `delete()`. After `free()`ing a chunk there's no information stored about the new status of that chunk (*e. g.* setting it to NULL). We'd consider another bug of uninitialized memory in `create()` since the chunks aren't `memset()` before they are used.
 
 The function `math()` is peculiar because it doesn't let us store information as it is in a chunk, it rather allows us to increment independently the three integers that each chunk hold.
 
